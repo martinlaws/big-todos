@@ -52,7 +52,6 @@ I'm a designer-developer dedicated to creating beautiful, functional, inclusive,
         singleQuote: true,
         semi: false
       };
-
 - Application structure
     - `public/ndex.html` entrypoint
     - JavaScript app instantiates in `src/main.js`
@@ -61,5 +60,11 @@ I'm a designer-developer dedicated to creating beautiful, functional, inclusive,
 - Props, Rendering using `{{}}`
 - Reactivity in Vue
 - Directives, `v-for`, `v-on`, `v-bind`, `v-model`
+- Create `ToDoContainer` component
 - Scoped styles
-- One vs two-way data binding
+- Methods
+- Add `localStorage` for data persistence
+- Deploy to GitHub Pages
+
+## Additional resources
+- Coming soon!
