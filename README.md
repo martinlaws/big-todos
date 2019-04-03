@@ -25,6 +25,11 @@ npm run test
 npm run lint
 ```
 
+### Running the Vue UI (optional)
+```
+vue ui
+```
+
 ## Lecture notes
 
 ### 👋 Hi, I'm Martin 🧔🏻
