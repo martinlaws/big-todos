@@ -1,3 +1,3 @@
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'production' ? '/big-todos/' : '/'
+  publicPath: process.env.NODE_ENV === 'production' ? '/dsm-todos/' : '/'
 }
