@@ -1,41 +1,34 @@
 <template>
-  <div>
-    <div class="todos-container">
-      <div
-        class="todo-card"
-        v-for="todo in todos"
-        :key="todo.id"
-        @click="completeTodo(todo)"
-        :class="{
-          complete: todo.complete,
-          incomplete: !todo.complete
-        }"
-      >
-        <h2>{{ todo.title }}</h2>
-      </div>
-    </div>
-    <form class="edit-form" @submit.prevent="save(todos)">
-      <input
-        type="text"
-        v-for="todo in todos"
-        :key="todo.id"
-        v-model="todo.title"
-      />
-      <div class="edit-form__action-bar">
-        <input type="submit" value="Save" />
-        <button @click="clearTodos()">Reset Todos</button>
-      </div>
-    </form>
-  </div>
+  <a-layout>
+    <a-layout-header>
+      Header
+      <a-button type="primary" @click="clearTodos()">Reset</a-button>
+    </a-layout-header>
+
+    <a-layout-content>
+      <a-layout>
+        <div class="todos-container">
+          <ToDoItem
+            v-for="todoItem in todos"
+            :key="todoItem.id"
+            @click="completeTodo(todoItem)"
+            :todoItem="todoItem"
+          />
+        </div>
+      </a-layout>
+    </a-layout-content>
+  </a-layout>
 </template>
 
 <script>
-const STORAGE_KEY = 'one-big-thing'
+import ToDoItem from '@/components/ToDoItem.vue'
+
+const STORAGE_KEY = 'dsm-todos'
 const baseTodos = [
-  { id: 0, title: 'Big Todo!', complete: false },
-  { id: 1, title: 'Little Todo #1', complete: false },
-  { id: 2, title: 'Little Todo #2', complete: false },
-  { id: 3, title: 'Little Todo #3', complete: false }
+  { id: 0, title: '', complete: false },
+  { id: 1, title: '', complete: false },
+  { id: 2, title: '', complete: false },
+  { id: 3, title: '', complete: false }
 ]
 
 export default {
@@ -44,16 +37,19 @@ export default {
       todos: this.fetchTodos()
     }
   },
+  components: { ToDoItem },
   methods: {
-    save(todos) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
-    },
     fetchTodos() {
       const todos = JSON.parse(localStorage.getItem(STORAGE_KEY)) || baseTodos
       return todos
     },
     clearTodos() {
       this.todos = baseTodos
+
+      // eslint-disable-next-line
+      console.table(this.todos)
+
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(this.todos))
     },
     completeTodo(todo) {
       todo.complete = !todo.complete
@@ -65,47 +61,19 @@ export default {
 
 <style scoped>
 .todos-container {
-  height: 50%;
   width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 1fr 1fr;
+  gap: 2rem;
+  padding: 2rem 1.75em;
+}
+
+.todos-container .todo-card {
+  height: 17rem;
 }
 
 .todos-container .todo-card:first-of-type {
   grid-column: span 3;
-  height: 15rem;
   font-size: 3rem;
-}
-
-.todo-card {
-  margin: 0.5rem;
-  cursor: pointer;
-  user-select: none;
-  background-color: lightgreen;
-  padding: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.complete {
-  text-decoration: line-through;
-  background-color: lightcoral;
-}
-
-.edit-form {
-  margin-top: 2.5rem;
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
-  justify-content: space-around;
-  padding: 1.5rem;
-  margin: 0.5rem 0.5rem;
-  background-color: lightblue;
-}
-
-.edit-form__action-bar {
-  display: flex;
 }
 </style>
