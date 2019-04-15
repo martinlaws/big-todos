@@ -23,7 +23,7 @@
 </template>
 
 <script>
-const STORAGE_KEY = 'dsm-todos'
+import STORAGE_KEY from '@/utils/storage-key'
 const todos = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []
 const findToDoIndex = id => todos.findIndex(todo => todo.id === Number(id))
 

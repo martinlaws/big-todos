@@ -21,9 +21,9 @@
 </template>
 
 <script>
+import STORAGE_KEY from '@/utils/storage-key'
 import ToDoItem from '@/components/ToDoItem.vue'
 
-const STORAGE_KEY = 'dsm-todos'
 const baseTodos = [
   { id: 0, title: '', complete: false },
   { id: 1, title: '', complete: false },
@@ -50,6 +50,8 @@ export default {
       console.table(this.todos)
 
       localStorage.setItem(STORAGE_KEY, JSON.stringify(this.todos))
+
+      this.$emit('clear-todos', baseTodos)
     },
     completeTodo(todo) {
       todo.complete = !todo.complete
