@@ -5,17 +5,15 @@
       <a-button type="primary" @click="clearTodos()">Reset</a-button>
     </a-layout-header>
 
-    <a-layout-content>
-      <a-layout>
-        <div class="todos-container">
-          <ToDoItem
-            v-for="todoItem in todos"
-            :key="todoItem.id"
-            @click="completeTodo(todoItem)"
-            :todoItem="todoItem"
-          />
-        </div>
-      </a-layout>
+    <a-layout-content class="app-container">
+      <div class="todos-container">
+        <ToDoItem
+          v-for="todoItem in todos"
+          :key="todoItem.id"
+          @click="completeTodo(todoItem)"
+          :todoItem="todoItem"
+        />
+      </div>
     </a-layout-content>
   </a-layout>
 </template>
@@ -62,20 +60,27 @@ export default {
 </script>
 
 <style scoped>
+.app-container {
+  min-height: 100vh;
+}
+
 .todos-container {
   width: 100%;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
   padding: 2rem 1.75em;
+  display: flex;
+  flex-flow: column nowrap;
 }
 
-.todos-container .todo-card {
-  height: 17rem;
-}
+@media only screen and (min-width: 750px) {
+  .todos-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
 
-.todos-container .todo-card:first-of-type {
-  grid-column: span 3;
-  font-size: 3rem;
+  .todos-container .todo-card:first-of-type {
+    grid-column: span 3;
+    font-size: 3rem;
+  }
 }
 </style>

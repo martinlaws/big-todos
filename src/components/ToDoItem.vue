@@ -1,5 +1,5 @@
 <template>
-  <a-layout
+  <div
     class="todo-card"
     :class="{
       complete: todo.complete,
@@ -19,7 +19,7 @@
       enter-button="Add"
       @search="addTodo"
     />
-  </a-layout>
+  </div>
 </template>
 
 <script>
@@ -36,16 +36,11 @@ export default {
   },
   methods: {
     onChange(todo) {
-      const index = findToDoIndex(todo.id)
-
       todo.complete = !todo.complete
 
-      todos[index] = todo
-
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
+      this.saveTodo(todo)
     },
     addTodo(value) {
-      const index = findToDoIndex(this.todo.id)
       const newTodo = {
         id: this.todo.id,
         title: value,
@@ -54,9 +49,12 @@ export default {
 
       this.todo = newTodo
 
-      todos[index] = this.todo
-      // eslint-disable-next-line
-      console.table(todos)
+      this.saveTodo(newTodo)
+    },
+    saveTodo(todo) {
+      const index = findToDoIndex(todo.id)
+
+      todos[index] = todo
 
       localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
     }
@@ -66,6 +64,7 @@ export default {
 
 <style scoped>
 .todo-card {
+  height: 17rem;
   user-select: none;
   background-color: #fff;
   border-radius: 8px;
@@ -73,9 +72,16 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 2rem;
 }
 
 .complete {
   text-decoration: line-through;
+}
+
+@media only screen and (min-width: 750px) {
+  .todo-card {
+    margin-bottom: 0;
+  }
 }
 </style>
