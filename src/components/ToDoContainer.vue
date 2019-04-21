@@ -1,18 +1,35 @@
 <template>
   <a-layout>
     <a-layout-header class="app-header">
-      Header
+      <div class="logo">
+        <span>
+          DSM Proof of Concept
+        </span>
+        <a href="https://github.com/martinlaws/dsm-todos">
+          <a-icon type="github" />
+        </a>
+      </div>
       <a-button type="primary" @click="clearTodos()">Reset</a-button>
     </a-layout-header>
 
     <a-layout-content class="app-container">
-      <div class="todos-container">
+      <div class="todo-list">
         <ToDoItem
-          v-for="todoItem in todos"
+          class="todo-card"
+          v-for="todoItem in todos.todos"
           :key="todoItem.id"
-          @click="completeTodo(todoItem)"
           :todoItem="todoItem"
+          @save-todos="saveTodoItem"
         />
+        <div class="todo-card small-todos-container">
+          <ToDoItem
+            v-for="item in todos.smallTodos"
+            :key="item.id"
+            :todoItem="item"
+            class="small-todo"
+            @save-todos="saveSmallTodoItem"
+          />
+        </div>
       </div>
     </a-layout-content>
   </a-layout>
@@ -20,14 +37,8 @@
 
 <script>
 import STORAGE_KEY from '@/utils/storage-key'
+import BASE_TODOS from '@/utils/base-todos'
 import ToDoItem from '@/components/ToDoItem.vue'
-
-const baseTodos = [
-  { id: 0, title: '', complete: false },
-  { id: 1, title: '', complete: false },
-  { id: 2, title: '', complete: false },
-  { id: 3, title: '', complete: false }
-]
 
 export default {
   data: function() {
@@ -38,32 +49,66 @@ export default {
   components: { ToDoItem },
   methods: {
     fetchTodos() {
-      const todos = JSON.parse(localStorage.getItem(STORAGE_KEY)) || baseTodos
+      const todos = JSON.parse(localStorage.getItem(STORAGE_KEY)) || BASE_TODOS
       return todos
     },
     clearTodos() {
-      this.todos = baseTodos
+      this.todos = BASE_TODOS
 
-      // eslint-disable-next-line
-      console.table(this.todos)
-
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(this.todos))
-
-      this.$emit('clear-todos', baseTodos)
+      this.saveTodos(BASE_TODOS)
     },
-    completeTodo(todo) {
-      todo.complete = !todo.complete
-      this.save(this.todos)
+    saveTodoItem(todo) {
+      const todos = this.todos
+
+      const findToDoIndex = todo =>
+        todos.todos.findIndex(todoItem => todoItem.id === todo.id)
+
+      const todoIndex = findToDoIndex(todo)
+
+      todos.todos[todoIndex] = todo
+
+      this.saveTodos(todos)
+    },
+    saveSmallTodoItem(todo) {
+      const todos = this.todos
+
+      const findToDoIndex = todo =>
+        todos.smallTodos.findIndex(todoItem => todoItem.id === todo.id)
+
+      const todoIndex = findToDoIndex(todo)
+
+      todos.smallTodos[todoIndex] = todo
+
+      this.createNewSmallTodoItem()
+
+      this.saveTodos(todos)
+    },
+    createNewSmallTodoItem() {
+      const newTodo = {
+        id: this.todos.smallTodos.length + 1,
+        title: '',
+        complete: false
+      }
+
+      this.todos.smallTodos.push(newTodo)
+    },
+    saveTodos(todos) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
     }
   }
 }
 </script>
 
-<style scoped>
+<style>
 .app-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: #fff;
+}
+
+.logo a {
+  margin-left: 10px;
 }
 
 .app-container {
@@ -72,23 +117,57 @@ export default {
   margin: auto;
 }
 
-.todos-container {
-  width: 100%;
+.todo-list {
   padding: 2rem 1.75em;
   display: flex;
   flex-flow: column nowrap;
 }
 
+.todo-card {
+  min-height: 17rem;
+  user-select: none;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.complete {
+  text-decoration: line-through;
+}
+
+.todo-card.small-todos-container {
+  align-items: flex-start;
+  justify-content: flex-start;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(6, 1fr);
+  gap: 1rem;
+}
+
 @media only screen and (min-width: 750px) {
-  .todos-container {
+  .todo-list {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
     gap: 2rem;
   }
 
-  .todos-container .todo-card:first-of-type {
+  .todo-list .todo-card:first-of-type {
     grid-column: span 3;
     font-size: 3rem;
+  }
+
+  .todo-card {
+    margin-bottom: 0;
+  }
+
+  .todo-card.small-todos-container {
+    grid-column: span 3;
+    grid-template-columns: 1fr 1fr;
   }
 }
 </style>
