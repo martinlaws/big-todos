@@ -20,6 +20,7 @@
           :key="todoItem.id"
           :todoItem="todoItem"
           @save-todos="saveTodoItem"
+          @complete-todo="saveTodoItem"
         />
         <div class="todo-card small-todos-container">
           <ToDoItem
@@ -28,6 +29,7 @@
             :todoItem="item"
             class="small-todo"
             @save-todos="saveSmallTodoItem"
+            @complete-todo="completeSmallTodoItem"
           />
         </div>
       </div>
@@ -72,14 +74,28 @@ export default {
     saveSmallTodoItem(todo) {
       const todos = this.todos
 
+      const findSmallToDoIndex = (todo, todos) =>
+        todos.smallTodos.findIndex(todoItem => todoItem.id === todo.id)
+
+      const todoIndex = findSmallToDoIndex(todo, todos)
+
+      todos.smallTodos[todoIndex] = todo
+
+      if (todo.title !== '') {
+        this.createNewSmallTodoItem()
+      }
+
+      this.saveTodos(todos)
+    },
+    completeSmallTodoItem(todo) {
+      const todos = this.todos
+
       const findToDoIndex = todo =>
         todos.smallTodos.findIndex(todoItem => todoItem.id === todo.id)
 
       const todoIndex = findToDoIndex(todo)
 
       todos.smallTodos[todoIndex] = todo
-
-      this.createNewSmallTodoItem()
 
       this.saveTodos(todos)
     },

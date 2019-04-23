@@ -38,7 +38,7 @@ export default {
     onChange(todo) {
       todo.complete = !todo.complete
 
-      this.emitSave(todo)
+      this.emitComplete(todo)
     },
     addTodo(value) {
       const newTodo = {
@@ -53,6 +53,9 @@ export default {
     },
     emitSave(todo) {
       this.$emit('save-todos', todo)
+    },
+    emitComplete(todo) {
+      this.$emit('complete-todo', todo)
     }
   }
 }
