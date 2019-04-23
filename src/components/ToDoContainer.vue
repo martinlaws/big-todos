@@ -1,16 +1,6 @@
 <template>
   <a-layout class="full-height container">
-    <a-layout-header class="app-header">
-      <div class="logo">
-        <span>
-          DSM Proof of Concept
-        </span>
-        <a href="https://github.com/martinlaws/dsm-todos">
-          <a-icon type="github" />
-        </a>
-      </div>
-      <a-button type="primary" @click="clearTodos()">Reset</a-button>
-    </a-layout-header>
+    <AppHeader @reset-todos="clearTodos" />
 
     <a-layout-content class="app-container">
       <div class="todo-list">
@@ -38,9 +28,10 @@
 </template>
 
 <script>
+import ToDoItem from '@/components/ToDoItem.vue'
+import AppHeader from '@/components/AppHeader.vue'
 import STORAGE_KEY from '@/utils/storage-key'
 import BASE_TODOS from '@/utils/base-todos'
-import ToDoItem from '@/components/ToDoItem.vue'
 
 export default {
   data: function() {
@@ -48,7 +39,7 @@ export default {
       todos: this.fetchTodos()
     }
   },
-  components: { ToDoItem },
+  components: { ToDoItem, AppHeader },
   methods: {
     fetchTodos() {
       const todos = JSON.parse(localStorage.getItem(STORAGE_KEY)) || BASE_TODOS
@@ -120,27 +111,17 @@ export default {
   min-height: 100vh;
 }
 
-.app-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: #fff;
-}
-
-.logo a {
-  margin-left: 10px;
-}
-
 .app-container {
-  min-width: 80%;
-  max-width: 1020px;
+  width: 85vw;
+  max-width: 900px;
   margin: auto;
 }
 
 .todo-list {
   padding: 2rem 1.75em;
-  display: flex;
-  flex-flow: column nowrap;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
 }
 
 .todo-card {
@@ -151,11 +132,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 2rem;
-}
-
-.complete {
-  text-decoration: line-through;
 }
 
 .todo-card.small-todos-container {
@@ -168,18 +144,12 @@ export default {
 
 @media only screen and (min-width: 750px) {
   .todo-list {
-    display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
   }
 
   .todo-list .todo-card:first-of-type {
     grid-column: span 3;
     font-size: 3rem;
-  }
-
-  .todo-card {
-    margin-bottom: 0;
   }
 
   .todo-card.small-todos-container {
