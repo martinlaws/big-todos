@@ -1,5 +1,5 @@
 <template>
-  <a-layout>
+  <a-layout class="full-height container">
     <a-layout-header class="app-header">
       <div class="logo">
         <span>
@@ -116,6 +116,10 @@ export default {
 </script>
 
 <style>
+.full-height.container {
+  min-height: 100vh;
+}
+
 .app-header {
   display: flex;
   justify-content: space-between;
@@ -128,7 +132,7 @@ export default {
 }
 
 .app-container {
-  min-height: 100vh;
+  min-width: 80%;
   max-width: 1020px;
   margin: auto;
 }
@@ -140,11 +144,10 @@ export default {
 }
 
 .todo-card {
-  min-height: 17rem;
-  user-select: none;
+  min-height: 15rem;
   background-color: #fff;
   border-radius: 8px;
-  padding: 1rem;
+  padding: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -156,19 +159,17 @@ export default {
 }
 
 .todo-card.small-todos-container {
-  align-items: flex-start;
-  justify-content: flex-start;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(6, 1fr);
-  gap: 1rem;
+  grid-auto-rows: 2rem;
+  column-gap: 4rem;
+  row-gap: 1rem;
 }
 
 @media only screen and (min-width: 750px) {
   .todo-list {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
   }
 
