@@ -6,7 +6,14 @@
       <a-collapse-panel header="View live DSM variables">
         <pre>
           <code>
-            {{localDSMVariables}}
+{{ originalDSMVariables }}
+          </code>
+        </pre>
+      </a-collapse-panel>
+      <a-collapse-panel header="View massaged DSM variables">
+        <pre>
+          <code>
+{{ localDSMVariables }}
           </code>
         </pre>
       </a-collapse-panel>
@@ -28,7 +35,8 @@ export default {
   },
   data() {
     return {
-      localDSMVariables: null
+      originalDSMVariables: {},
+      localDSMVariables: {}
     }
   },
   methods: {
@@ -45,14 +53,28 @@ export default {
           response.json().then(data => {
             // eslint-disable-next-line
             console.log('DATA:', data.list)
-            this.localDSMVariables = data.list
-            return
+            this.originalDSMVariables = data.list
+
+            this.massageDSMVariables(data.list)
           })
         })
         .catch(error => {
           // eslint-disable-next-line
           console.error(error)
         })
+    },
+    massageDSMVariables(DSMVariables) {
+      const obj = {}
+
+      const formattedVariables = DSMVariables.colors.map(variableGroup => {
+        variableGroup.colors.map(individualVariable => {
+          obj[`${individualVariable.name}`] = individualVariable.value
+        })
+
+        return obj
+      })
+
+      this.localDSMVariables = formattedVariables[0]
     }
   }
 }
