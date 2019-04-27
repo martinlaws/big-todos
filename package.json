@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "npm run fetch-styles && vue-cli-service serve",
+    "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "fetch-styles": "node ./utils/fetchStyles.js"

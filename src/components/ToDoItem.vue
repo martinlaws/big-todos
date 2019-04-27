@@ -8,7 +8,7 @@
     <a-checkbox
       v-if="todo.title !== ''"
       :defaultChecked="todo.complete"
-      @change="completeTodo(todo)"
+      @change="completeTodo"
     >
       {{ todo.title }}
     </a-checkbox>
@@ -23,7 +23,7 @@
 
 <script>
 export default {
-  props: ['todoItem'],
+  props: ['todoItem', 'size'],
   data: function() {
     return {
       todo: this.todoItem
@@ -35,10 +35,10 @@ export default {
     }
   },
   methods: {
-    completeTodo(todo) {
-      todo.complete = !todo.complete
+    completeTodo() {
+      this.todo.complete = !this.todo.complete
 
-      this.$emit('complete-todo', todo)
+      this.$emit('complete-todo', this.todo)
     },
     addTodo(value) {
       const newTodo = {
@@ -49,7 +49,7 @@ export default {
 
       this.todo = newTodo
 
-      this.$emit('save-todos', newTodo)
+      this.$emit('save-todos', newTodo, this.size)
     }
   }
 }

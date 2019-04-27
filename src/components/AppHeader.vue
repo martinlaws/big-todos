@@ -9,17 +9,40 @@
           <a-icon type="github" />
         </a>
       </div>
-      <a-button type="primary" @click="emitReset()">Reset</a-button>
+      <span class="app-header__action-buttons">
+        <a-button type="default" @click="showModal">View DSM</a-button>
+        <a-button type="primary" @click="emitReset">Reset</a-button>
+      </span>
     </a-layout-header>
+
+    <a-modal title="Basic Modal" v-model="visible" @ok="handleOk">
+      <DSMContainer />
+    </a-modal>
   </div>
 </template>
 
 <script>
+import DSMContainer from '@/components/DSMContainer'
+
 export default {
+  data() {
+    return {
+      visible: false
+    }
+  },
   methods: {
-    emitReset: function() {
+    showModal() {
+      this.visible = true
+    },
+    handleOk() {
+      this.visible = false
+    },
+    emitReset() {
       this.$emit('reset-todos')
     }
+  },
+  components: {
+    DSMContainer
   }
 }
 </script>
@@ -32,7 +55,8 @@ export default {
   color: #fff;
 }
 
+.app-header__action-buttons button,
 .logo a {
-  margin-left: 10px;
+  margin-left: 0.5rem;
 }
 </style>

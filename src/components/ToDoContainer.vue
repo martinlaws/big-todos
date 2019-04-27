@@ -14,12 +14,12 @@
         />
         <div class="todo-card small-todos-container">
           <ToDoItem
-            v-for="item in todos.smallTodos"
-            :key="item.id"
-            :todoItem="item"
-            class="small-todo"
-            @save-todos="saveSmallTodoItem"
-            @complete-todo="completeSmallTodoItem"
+            v-for="smallTodoItem in todos.smallTodos"
+            :key="smallTodoItem.id"
+            :todoItem="smallTodoItem"
+            size="small"
+            @save-todos="saveTodoItem"
+            @complete-todo="saveTodoItem"
           />
         </div>
       </div>
@@ -34,73 +34,51 @@ import STORAGE_KEY from '@/utils/storage-key'
 import BASE_TODOS from '@/utils/base-todos'
 
 export default {
+  components: { ToDoItem, AppHeader },
   data: function() {
     return {
       todos: this.fetchTodos()
     }
   },
-  components: { ToDoItem, AppHeader },
   methods: {
     fetchTodos() {
-      const todos = JSON.parse(localStorage.getItem(STORAGE_KEY)) || BASE_TODOS
-      return todos
+      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || BASE_TODOS
     },
     clearTodos() {
       this.todos = BASE_TODOS
 
       this.saveTodos(BASE_TODOS)
     },
-    saveTodoItem(todo) {
-      const todos = this.todos
-
-      const findToDoIndex = todo =>
-        todos.todos.findIndex(todoItem => todoItem.id === todo.id)
-
-      const todoIndex = findToDoIndex(todo)
-
-      todos.todos[todoIndex] = todo
-
-      this.saveTodos(todos)
+    findToDoIndex(todo, size = null) {
+      if (size === 'small') {
+        return this.todos.smallTodos.findIndex(
+          todoItem => todoItem.id === todo.id
+        )
+      }
+      return this.todos.todos.findIndex(todoItem => todoItem.id === todo.id)
     },
-    saveSmallTodoItem(todo) {
-      const todos = this.todos
+    saveTodoItem(todo, size = null) {
+      const todoIndex = this.findToDoIndex(todo, size)
 
-      const findSmallToDoIndex = (todo, todos) =>
-        todos.smallTodos.findIndex(todoItem => todoItem.id === todo.id)
+      if (size === 'small') {
+        this.todos.smallTodos[todoIndex] = todo
 
-      const todoIndex = findSmallToDoIndex(todo, todos)
-
-      todos.smallTodos[todoIndex] = todo
-
-      if (todo.title !== '') {
-        this.createNewSmallTodoItem()
+        if (todo.title !== '') this.createNewSmallTodoItem()
+      } else {
+        this.todos.todos[todoIndex] = todo
       }
 
-      this.saveTodos(todos)
-    },
-    completeSmallTodoItem(todo) {
-      const todos = this.todos
-
-      const findToDoIndex = todo =>
-        todos.smallTodos.findIndex(todoItem => todoItem.id === todo.id)
-
-      const todoIndex = findToDoIndex(todo)
-
-      todos.smallTodos[todoIndex] = todo
-
-      this.saveTodos(todos)
+      this.saveTodos()
     },
     createNewSmallTodoItem() {
-      const newTodo = {
+      this.todos.smallTodos.push({
         id: this.todos.smallTodos.length + 1,
         title: '',
         complete: false
-      }
-
-      this.todos.smallTodos.push(newTodo)
+      })
     },
-    saveTodos(todos) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
+    saveTodos() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(this.todos))
     }
   }
 }
@@ -138,8 +116,7 @@ export default {
   display: grid;
   grid-template-columns: 1fr;
   grid-auto-rows: 2rem;
-  column-gap: 4rem;
-  row-gap: 1rem;
+  gap: 1rem 4rem;
 }
 
 @media only screen and (min-width: 750px) {
