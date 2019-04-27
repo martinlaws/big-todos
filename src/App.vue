@@ -2,11 +2,15 @@
   <div id="app">
     <ToDoContainer />
 
-    <pre>
-      <code>
-        {{JSON.stringify(localDSMVariables)}}
-      </code>
-    </pre>
+    <a-collapse>
+      <a-collapse-panel header="View live DSM variables">
+        <pre>
+          <code>
+            {{localDSMVariables}}
+          </code>
+        </pre>
+      </a-collapse-panel>
+    </a-collapse>
   </div>
 </template>
 
