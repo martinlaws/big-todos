@@ -1,4 +1,4 @@
-const formattedDSMVariables = require('./utils/dsm-styles.json')
+const formattedDSMVariables = require('./src/assets/dsm-styles.json')
 
 module.exports = {
   publicPath: process.env.NODE_ENV === 'production' ? '/dsm-todos/' : '/',

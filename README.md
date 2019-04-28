@@ -1,4 +1,10 @@
-# big-todos
+# DSM API Proof of Concept
+
+👋Hi! Thanks for visiting this project. We've set out to create accessible examples using [InVision Design System Manager (DSM)](https://www.invisionapp.com/design-system-manager). This example includes the following:
+
+#### Fetching styles from DSM
+- See [`src/utils/fetchStyles.js`](https://github.com/martinlaws/dsm-todos/blob/master/src/utils/fetchStyles.js) to see how styles are being fetched, parsed, and returned from DSM's JSON API.
+- See [`vue.config.js`](https://github.com/martinlaws/dsm-todos/blob/master/vue.config.js) to see how the styles fetched above are loaded in as [Ant Design Vue theme customizations](https://vue.ant.design/docs/vue/customize-theme/).
 
 ## Project setup
 ```
@@ -29,47 +35,3 @@ npm run lint
 ```
 vue ui
 ```
-
-## Lecture notes
-
-### 👋 Hi, I'm Martin 🧔🏻
-
-| @martin on slack
-
-I'm a designer-developer dedicated to creating beautiful, functional, inclusive, and accessible web experiences. My expertise is in front end development, design thinking, product prototyping, and technical strategy; I run a development and design thinking practice called Low Tide Consulting.
-
----
-
-### What did we talk about?
-
-- Project creation using vue-cli
-    - `@vue/cli`
-    - `vue ui`
-- Create project
-- Quick demo of `vue ui`
-    - Plugins/Dependencies
-    - Configuration
-    - Tasks
-        - Build and show webpack analysis
-- Code formatting: who cares?
-    - Add `.prettierrc.js`
-      module.exports = {
-        singleQuote: true,
-        semi: false
-      };
-- Application structure
-    - `public/ndex.html` entrypoint
-    - JavaScript app instantiates in `src/main.js`
-- Single file components
-    - `App.vue` & `HelloWorld`
-- Props, Rendering using `{{}}`
-- Reactivity in Vue
-- Directives, `v-for`, `v-on`, `v-bind`, `v-model`
-- Create `ToDoContainer` component
-- Scoped styles
-- Methods
-- Add `localStorage` for data persistence
-- Deploy to GitHub Pages
-
-## Additional resources
-- Coming soon!

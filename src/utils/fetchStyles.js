@@ -2,7 +2,7 @@ const fetch = require('node-fetch')
 const fs = require('fs')
 
 const writeToStylesFile = data => {
-  fs.writeFile('./utils/dsm-styles.json', JSON.stringify(data), err => {
+  fs.writeFile('./src/assets/dsm-styles.json', JSON.stringify(data), err => {
     // eslint-disable-next-line
     if (err) console.error(err);
     // eslint-disable-next-line
@@ -11,16 +11,19 @@ const writeToStylesFile = data => {
 }
 
 const massageDSMVariables = retrievedVariables => {
+  const { colors, typeStyles } = retrievedVariables
   const styles = {}
 
-  const formattedVariables = retrievedVariables.colors.map(variableGroup => {
-    variableGroup.colors.map(individualVariable => {
-      styles[`${individualVariable.name}`] = individualVariable.value
+  colors.map(colorPalette => {
+    colorPalette.colors.map(color => {
+      styles[`${color.name}`] = color.value
     })
   })
 
+  styles['font-family'] = `${typeStyles[3]['fontFamily']}`
+
   writeToStylesFile(styles)
-  return formattedVariables
+  return styles
 }
 
 const DSMVariables = fetch(
