@@ -1,7 +1,7 @@
 const formattedDSMVariables = require('./src/assets/dsm-styles.json')
 
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'production' ? '/dsm-todos/' : '/',
+  publicPath: process.env.NODE_ENV === 'production' ? '/dsm-todos-ant/' : '/',
   css: {
     loaderOptions: {
       less: {

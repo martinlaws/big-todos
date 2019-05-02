@@ -13,6 +13,6 @@ git init
 git add -A
 git commit -m 'deploy'
 
-git push -f git@github.com:martinlaws/dsm-todos.git master:gh-pages
+git push -f git@github.com:martinlaws/dsm-todos-ant.git master:gh-pages
 
 cd -
