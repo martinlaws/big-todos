@@ -106,10 +106,10 @@ export default {
   min-height: 15rem;
   background-color: #fff;
   border-radius: 8px;
-  padding: 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 2fr;
+  text-align: center;
 }
 
 .todo-card.small-todos-container {

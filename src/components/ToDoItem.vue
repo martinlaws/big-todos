@@ -5,19 +5,24 @@
       incomplete: !todo.complete
     }"
   >
-    <a-checkbox
-      v-if="todo.title !== ''"
-      :defaultChecked="todo.complete"
-      @change="completeTodo"
-    >
-      {{ todo.title }}
-    </a-checkbox>
-    <a-input-search
-      v-else
-      placeholder="Enter a todo!"
-      enter-button="Add"
-      @search="addTodo"
-    />
+    <div class="todo-card__header">
+      Title goes here
+    </div>
+    <div class="todo-card__content">
+      <a-checkbox
+        v-if="todo.title !== ''"
+        :defaultChecked="todo.complete"
+        @change="completeTodo"
+      >
+        {{ todo.title }}
+      </a-checkbox>
+      <a-input-search
+        v-else
+        placeholder="Enter a todo!"
+        enter-button="Add"
+        @search="addTodo"
+      />
+    </div>
   </div>
 </template>
 
@@ -58,5 +63,9 @@ export default {
 <style scoped>
 .complete {
   text-decoration: line-through;
+}
+
+.todo-card__content {
+  padding: 1.5rem;
 }
 </style>
