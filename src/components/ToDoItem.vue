@@ -1,20 +1,16 @@
 <template>
-  <div
-    :class="{
-      complete: todo.complete,
-      incomplete: !todo.complete
-    }"
-  >
-    <div class="todo-card__header">
-      Title goes here
+  <div>
+    <div class="todo-card__header" v-if="this.size !== 'small'">
+      {{ todo.title }}
     </div>
     <div class="todo-card__content">
       <a-checkbox
-        v-if="todo.title !== ''"
+        :class="{ complete: todo.complete }"
+        v-if="todo.content !== ''"
         :defaultChecked="todo.complete"
         @change="completeTodo"
       >
-        {{ todo.title }}
+        {{ todo.content }}
       </a-checkbox>
       <a-input-search
         v-else
@@ -48,7 +44,8 @@ export default {
     addTodo(value) {
       const newTodo = {
         id: this.todo.id,
-        title: value,
+        title: this.todo.title,
+        content: value,
         complete: false
       }
 
@@ -65,7 +62,14 @@ export default {
   text-decoration: line-through;
 }
 
+.todo-card__header {
+  padding: 1rem;
+  border-bottom: 1px solid #d8d8d8;
+  font-size: 2rem;
+}
+
 .todo-card__content {
   padding: 1.5rem;
+  user-select: none;
 }
 </style>

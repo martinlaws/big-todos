@@ -63,7 +63,7 @@ export default {
       if (size === 'small') {
         this.todos.smallTodos[todoIndex] = todo
 
-        if (todo.title !== '') this.createNewSmallTodoItem()
+        if (todo.content !== '') this.createNewSmallTodoItem()
       } else {
         this.todos.todos[todoIndex] = todo
       }
@@ -73,7 +73,7 @@ export default {
     createNewSmallTodoItem() {
       this.todos.smallTodos.push({
         id: this.todos.smallTodos.length + 1,
-        title: '',
+        content: '',
         complete: false
       })
     },
@@ -110,6 +110,7 @@ export default {
   grid-template-columns: 1fr;
   grid-template-rows: 1fr 2fr;
   text-align: center;
+  font-size: 2rem;
 }
 
 .todo-card.small-todos-container {
@@ -126,7 +127,6 @@ export default {
 
   .todo-list .todo-card:first-of-type {
     grid-column: span 3;
-    font-size: 3rem;
   }
 
   .todo-card.small-todos-container {
