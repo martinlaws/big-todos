@@ -114,10 +114,13 @@ export default {
 }
 
 .todo-card.small-todos-container {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-auto-rows: 2rem;
-  gap: 1rem 4rem;
+  display: flex;
+  flex-flow: column-reverse nowrap;
+  justify-content: flex-end;
+}
+
+.todo-card.small-todos-container:last-child {
+  order: 0;
 }
 
 @media only screen and (min-width: 750px) {
@@ -131,7 +134,6 @@ export default {
 
   .todo-card.small-todos-container {
     grid-column: span 3;
-    grid-template-columns: 1fr 1fr;
   }
 }
 </style>

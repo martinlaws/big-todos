@@ -72,4 +72,8 @@ export default {
   padding: 1.5rem;
   user-select: none;
 }
+
+.todo-card.small-todos-container .todo-card__content {
+  padding: 0 1.5rem;
+}
 </style>
