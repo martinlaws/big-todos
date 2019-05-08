@@ -6,6 +6,10 @@ set -e
 # build
 npm run build
 
+# increment app version
+npm version patch
+git push origin head
+
 # navigate into the build output directory
 cd dist
 
