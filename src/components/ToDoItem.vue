@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="{ 'todo-input': this.todo.content === '' }">
     <div class="todo-card__header" v-if="this.size !== 'small'">
       {{ todo.title }}
     </div>

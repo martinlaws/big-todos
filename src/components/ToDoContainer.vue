@@ -115,12 +115,12 @@ export default {
 
 .todo-card.small-todos-container {
   display: flex;
-  flex-flow: column-reverse nowrap;
-  justify-content: flex-end;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
 }
 
-.todo-card.small-todos-container:last-child {
-  order: 0;
+.todo-card.small-todos-container .todo-input {
+  order: -1;
 }
 
 @media only screen and (min-width: 750px) {
