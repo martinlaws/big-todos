@@ -84,7 +84,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .full-height.container {
   min-height: 100vh;
 }
@@ -96,10 +96,14 @@ export default {
 }
 
 .todo-list {
-  padding: 2rem 1.75em;
+  padding: 2rem 1.75rem;
   display: grid;
   grid-template-columns: 1fr;
   gap: 2rem;
+
+  @media only screen and (min-width: 750px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .todo-card {
@@ -108,32 +112,28 @@ export default {
   border-radius: 8px;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr 2fr;
+  grid-template-rows: 5rem 2fr;
   text-align: center;
   font-size: 2rem;
-}
 
-.todo-card.small-todos-container {
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: flex-start;
-}
-
-.todo-card.small-todos-container .todo-input {
-  order: -1;
-}
-
-@media only screen and (min-width: 750px) {
-  .todo-list {
-    grid-template-columns: repeat(3, 1fr);
+  @media only screen and (min-width: 750px) {
+    &:first-of-type {
+      grid-column: span 3;
+    }
   }
 
-  .todo-list .todo-card:first-of-type {
-    grid-column: span 3;
-  }
+  &.small-todos-container {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
 
-  .todo-card.small-todos-container {
-    grid-column: span 3;
+    @media only screen and (min-width: 750px) {
+      grid-column: span 3;
+    }
+
+    .todo-input {
+      order: -1;
+    }
   }
 }
 </style>

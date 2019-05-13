@@ -4,14 +4,18 @@
       {{ todo.title }}
     </div>
     <div class="todo-card__content">
-      <a-checkbox
-        :class="{ complete: todo.complete }"
+      <div
         v-if="todo.content !== ''"
-        :defaultChecked="todo.complete"
-        @change="completeTodo"
+        :class="{
+          'todo-card__content--saved': true,
+          'todo-card--complete': todo.complete
+        }"
       >
-        {{ todo.content }}
-      </a-checkbox>
+        <a-checkbox @change="completeTodo" :checked="todo.complete" />
+        <p @click="completeTodo">
+          {{ todo.content }}
+        </p>
+      </div>
       <a-input-search
         v-else
         placeholder="Enter a todo!"
@@ -57,23 +61,32 @@ export default {
 }
 </script>
 
-<style scoped>
-.complete {
-  text-decoration: line-through;
-}
+<style lang="scss" scoped>
+.todo-card {
+  &__header {
+    padding: 1rem;
+    border-bottom: 1px solid #d8d8d8;
+    font-size: 2rem;
+  }
 
-.todo-card__header {
-  padding: 1rem;
-  border-bottom: 1px solid #d8d8d8;
-  font-size: 2rem;
-}
+  &--complete {
+    text-decoration: line-through;
+  }
 
-.todo-card__content {
-  padding: 1.5rem;
-  user-select: none;
-}
+  &__content {
+    padding: 1.5rem;
+    user-select: none;
 
-.todo-card.small-todos-container .todo-card__content {
-  padding: 0 1.5rem;
+    &--saved {
+      display: grid;
+      grid-template-columns: 2rem 1fr;
+      text-align: start;
+      font-size: 1rem;
+    }
+
+    &.small-todos-container .todo-card__content {
+      padding: 0 1.5rem;
+    }
+  }
 }
 </style>
