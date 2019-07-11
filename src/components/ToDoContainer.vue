@@ -35,7 +35,7 @@ import BASE_TODOS from '@/utils/base-todos'
 
 export default {
   components: { ToDoItem, AppHeader },
-  data: function() {
+  data() {
     return {
       todos: this.fetchTodos()
     }
