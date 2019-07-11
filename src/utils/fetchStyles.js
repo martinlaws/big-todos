@@ -16,7 +16,9 @@ const massageDSMVariables = retrievedVariables => {
 
   colors.map(colorPalette => {
     colorPalette.colors.map(color => {
-      styles[`${color.name}`] = color.value
+      if (color.name && color.value) {
+        styles[`${color.name}`] = color.value
+      }
     })
   })
 
